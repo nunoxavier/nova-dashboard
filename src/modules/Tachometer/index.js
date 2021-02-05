@@ -5,6 +5,8 @@ function Tachometer() {
     const totalRPM = 8;
     const orangeAt = 3;
     const redAt = 6;
+    // const totalBlocks = 5 * totalRPM;
+    let totalActive = 24;
 
     let rpmSections = [];
     let rpmNumbers = [];
@@ -12,7 +14,7 @@ function Tachometer() {
         let classes = [];
         let blocks = [];
 
-        classes.push('block-container');
+        classes.push('block-group');
         if (i >= redAt) {
             classes.push('block--red');
         } else if (i >= orangeAt) {
@@ -22,7 +24,7 @@ function Tachometer() {
         }
 
         for (let j = 0; j < 5; j++) {
-            blocks.push(<div className={'block block--' + j} />);
+            blocks.push(<div className={'block ' + (totalActive-- > 0 ? 'active' : '')} />);
         }
 
         rpmNumbers.push(<div className="number">{i}</div>);
@@ -30,13 +32,15 @@ function Tachometer() {
     }
 
     return (
-        <div className="Tachometer">
-            <div className="times"><span>x</span>1000</div>
-            <div className="rectangles-container">
-                {rpmSections}
-            </div>
-            <div className="numbers-container">
-                {rpmNumbers}
+        <div className="row justify-content-center Tachometer">
+            <div className="col">
+                <div className="numbers-container">
+                    {rpmNumbers}
+                </div>
+                <div className="blocks-container">
+                    {rpmSections}
+                </div>
+                <div className="times"><span>x</span>1000</div>
             </div>
         </div>
     );

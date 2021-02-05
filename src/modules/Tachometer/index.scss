@@ -3,15 +3,27 @@
 // CONFIG
 $totalRPMs: 8;
 
-$blockSections: 5;
-$blockHeight: 35;
-$blockWidth: 15;
+// actual block
+$blockHeight: 35; // 35 px
+$blockSections: 5; // 5
+$blockRightMargin: 4.5%; // %
+$blockTotalMargin: $blockRightMargin * ($blockSections - 1);
+$blockWidth: (100 / $blockSections) - ($blockTotalMargin / $blockSections); // %
 
-$containerBorderSize: 5;
-$containerPaddings: 5;
+// block group
+$blockGroupVerticalPadding: 5; // px
+$blockGroupRightMargin: 1%;
+$blockGroupTotalMargin: $blockGroupRightMargin * ($totalRPMs - 1);
+$blockGroupWidth: (100 / $totalRPMs) - ($blockGroupTotalMargin / $totalRPMs);
+
+// blocks container
+$blocksContainerBorderSize: 5; // px
+$blocksContainerVerticalPadding: 5; // px
+$blocksContainerHeight: $blockHeight + ($blocksContainerVerticalPadding * 2) + ($blocksContainerBorderSize * 2);
+
 
 .Tachometer {
-  height: 35%;
+  height: 25vh;
 }
 
 .times {
@@ -27,65 +39,70 @@ $containerPaddings: 5;
   }
 }
 
+// Numbers container
 .numbers-container {
   color: $cyan;
-  margin-top: 5px;
+  margin-bottom: 5px;
 
   .number {
     display: inline-block;
-    width: #{$blockSections * $blockWidth + 8 + $containerPaddings}px;
-    //font-weight: bold;
+    width: #{$blockGroupWidth};
+    margin-right: $blockGroupRightMargin;
     font-size: 20px;
     font-family: 'arcade';
     font-style: normal;
     font-weight: normal;
 
     &:last-child {
-      width: #{$blockSections * $blockWidth + 8}px;
+      margin: 0;
     }
   }
 }
 
-
-.rectangles-container {
+// Blocks container
+.blocks-container {
   display: block;
-  height: #{$blockHeight + ($containerPaddings * 2) + ($containerBorderSize * 2)}px;
-  width: 100%;
-  padding: #{$containerPaddings}px 0;
-  border-top: #{$containerBorderSize}px solid $cyan;
-  border-bottom: #{$containerBorderSize}px solid $cyan;
+  height: #{$blocksContainerHeight}px;
+  padding: #{$blockGroupVerticalPadding}px 0;
+  border-top: #{$blocksContainerBorderSize}px solid $cyan;
+  border-bottom: #{$blocksContainerBorderSize}px solid $cyan;
   position: relative;
-}
 
-.block-container {
-  display: inline-block;
-  height: #{$blockHeight}px;
-  margin-right: #{$containerPaddings}px;
-}
-.block-container:last-child {
-  margin-right: 0;
-}
+  .block-group {
+    display: inline-block;
+    width: #{$blockGroupWidth};
+    height: #{$blockHeight}px;
+    margin-right: $blockGroupRightMargin;
+  }
+  .block-group:last-child {
+    margin-right: 0;
+  }
 
-.block {
-  bottom: 0;
-  height: #{$blockHeight}px;
-  opacity: 1;
-  margin-right: 2px;
-  width: #{$blockWidth}px;
-  display: inline-block;
-}
-.block:last-child {
-  margin-right: 0;
-}
+  .block {
+    height: #{$blockHeight}px;
+    width: #{$blockWidth};
+    margin-right: #{$blockRightMargin};
+    display: inline-block;
+    opacity: 0.2;
 
-.block--red .block {
-  background: $red;
-}
+    &.active {
+      opacity: 1;
+    }
 
-.block--orange .block {
-  background: $orange;
-}
+    &:last-child {
+      margin-right: 0;
+    }
+  }
 
-.block--green .block {
-  background: $green;
+  .block--red .block {
+    background: $red;
+  }
+
+  .block--orange .block {
+    background: $orange;
+  }
+
+  .block--green .block {
+    background: $green;
+  }
 }
