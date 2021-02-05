@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+// Bootstrap components
+$color: #2be4ea;
+$blue:    #007bff !default; // #17D4FE
+$indigo:  #6610f2 !default;
+$purple:  #6f42c1 !default;
+$pink:    #e83e8c !default;
+$red:     #dc3545 !default;
+$orange:  #fd7e14 !default;
+$yellow:  #ffc107 !default;
+$green:   #28a745 !default;
+$teal:    #20c997 !default;
+$cyan:    #17a2b8 !default;
+
+$grid-columns:                12 !default;
+$grid-gutter-width:           10px !default;
+$grid-row-columns:            6 !default;
+
+@import '~bootstrap/scss/bootstrap';
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+// End boostrap

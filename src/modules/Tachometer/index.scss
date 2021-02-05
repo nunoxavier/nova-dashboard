@@ -1,0 +1,91 @@
+@import "../../variables";
+
+// CONFIG
+$totalRPMs: 8;
+
+$blockSections: 5;
+$blockHeight: 35;
+$blockWidth: 15;
+
+$containerBorderSize: 5;
+$containerPaddings: 5;
+
+.Tachometer {
+  height: 35%;
+}
+
+.times {
+  text-align: right;
+  color: $cyan;
+  font-family: 'arcade';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+
+  span {
+    font-size: 8px;
+  }
+}
+
+.numbers-container {
+  color: $cyan;
+  margin-top: 5px;
+
+  .number {
+    display: inline-block;
+    width: #{$blockSections * $blockWidth + 8 + $containerPaddings}px;
+    //font-weight: bold;
+    font-size: 20px;
+    font-family: 'arcade';
+    font-style: normal;
+    font-weight: normal;
+
+    &:last-child {
+      width: #{$blockSections * $blockWidth + 8}px;
+    }
+  }
+}
+
+
+.rectangles-container {
+  display: block;
+  height: #{$blockHeight + ($containerPaddings * 2) + ($containerBorderSize * 2)}px;
+  width: 100%;
+  padding: #{$containerPaddings}px 0;
+  border-top: #{$containerBorderSize}px solid $cyan;
+  border-bottom: #{$containerBorderSize}px solid $cyan;
+  position: relative;
+}
+
+.block-container {
+  display: inline-block;
+  height: #{$blockHeight}px;
+  margin-right: #{$containerPaddings}px;
+}
+.block-container:last-child {
+  margin-right: 0;
+}
+
+.block {
+  bottom: 0;
+  height: #{$blockHeight}px;
+  opacity: 1;
+  margin-right: 2px;
+  width: #{$blockWidth}px;
+  display: inline-block;
+}
+.block:last-child {
+  margin-right: 0;
+}
+
+.block--red .block {
+  background: $red;
+}
+
+.block--orange .block {
+  background: $orange;
+}
+
+.block--green .block {
+  background: $green;
+}

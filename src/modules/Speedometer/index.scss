@@ -1,0 +1,127 @@
+@import "../../variables";
+
+.Speedometer {
+  height: 50%;
+  width: 100%;
+}
+
+.mph__container {
+  height: 180px;
+  position: relative;
+}
+
+.mph, .mph--background{
+  font-family: "big numbers";
+  color: $cyan;
+  font-size: 145px;
+  line-height: 145px;
+  margin: 0;
+  text-align: center;
+  letter-spacing: -48px;
+  position: absolute;
+}
+
+.mph__number--default{
+  margin-right: 25px;
+  color: #181818;
+  width: 76px;
+}
+.mph__number--default:last-child{
+  margin-right: 0;
+}
+.mph__number{
+  position: absolute;
+  width: 76px;
+}
+.mph__number:nth-child(2n){
+  left: 94px;
+}
+.mph__number:nth-child(3n){
+  left: 190px;
+}
+
+.mph__number--default:before {
+  display: inline-block;
+  font-family: 'big numbers';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin-left: -27px;
+}
+
+.mph__number--0:after {
+  content: '\0030';
+  position: relative;
+  left: -27px;
+}
+
+.mph__number--1:after {
+  content: '\0031';
+  font-size: 135px;
+  left: 6px;
+  position: relative;
+}
+
+.mph__number--2:after {
+  content: '\0032';
+  position: relative;
+  left: -27px;
+}
+
+.mph__number--3:after {
+  content: '\0033';
+  position: relative;
+  left: -25px;
+}
+
+.mph__number--4:after {
+  content: '\0034';
+  position: relative;
+  left: -23px;
+  /*top: 1px;*/
+  font-size: 137px;
+}
+
+.mph__number--5:after {
+  content: '\0035';
+  position: relative;
+  left: -27px;
+  font-size: 145px;
+}
+
+.mph__number--6:after {
+  content: '\0036';
+  position: relative;
+  left: -27px;
+  font-size: 145px;
+}
+
+.mph__number--7:after {
+  content: '\0037';
+  position: relative;
+  left: -24px;
+  font-size: 143px;
+  top: -1px;
+}
+
+.mph__number--8:after,
+.mph__number--default:before {
+  content: '\0038';
+}
+
+.mph__number--8:after {
+  position: relative;
+  left: -27px;
+  top: 0;
+  font-size: 145px;
+}
+
+.mph__number--9:after {
+  content: '\0039';
+  position: relative;
+  left: -27px;
+  top: 0;
+  font-size: 145px;
+}

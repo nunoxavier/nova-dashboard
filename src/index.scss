@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+@import "variables";
+
+// Bootstrap components
+@import "~bootstrap/scss/root";
+@import "~bootstrap/scss/reboot";
+@import "~bootstrap/scss/type";
+@import "~bootstrap/scss/grid";
+@import "~bootstrap/scss/utilities";
+// End boostrap
+
+
+@font-face {
+  font-family: 'big numbers';
+  src: url('./fonts/big-numbers.eot');
+  src: url('./fonts/big-numbers.eot?#iefix') format('embedded-opentype'),
+  url('./fonts/big-numbers.woff') format('woff'),
+  url('./fonts/big-numbers.ttf') format('truetype'),
+  url('./fonts/big-numbers.svg#big-numbers') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'small numbers';
+  src: url('./fonts/small-numbers.eot');
+  src: url('./fonts/small-numbers.eot?#iefix') format('embedded-opentype'),
+  url('./fonts/small-numbers.woff') format('woff'),
+  url('./fonts/small-numbers.ttf') format('truetype'),
+  url('./fonts/small-numbers.svg#big-numbers') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'arcade';
+  src: url('./fonts/arcade.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
