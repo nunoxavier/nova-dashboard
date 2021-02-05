@@ -24,11 +24,11 @@ function Tachometer() {
         }
 
         for (let j = 0; j < 5; j++) {
-            blocks.push(<div className={'block ' + (totalActive-- > 0 ? 'active' : '')} />);
+            blocks.push(<div key={j} className={'block ' + (totalActive-- > 0 ? 'active' : '')} />);
         }
 
-        rpmNumbers.push(<div className="number">{i}</div>);
-        rpmSections.push(<div className={classes.join(' ')}>{blocks}</div>);
+        rpmNumbers.push(<div key={i} className="number">{i}</div>);
+        rpmSections.push(<div key={i} className={classes.join(' ')}>{blocks}</div>);
     }
 
     return (

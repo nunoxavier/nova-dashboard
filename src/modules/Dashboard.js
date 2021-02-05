@@ -13,6 +13,7 @@ function Dashboard() {
                     odometer / water tmp / fuel lvl
                 </div>
                 <div className="col-8">
+                    turn signals / high beams
                     <Speedometer/>
                 </div>
             </div>
