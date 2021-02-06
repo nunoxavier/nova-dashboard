@@ -1,17 +1,17 @@
 @charset "UTF-8";
 
 // Bootstrap components
-$color: #2be4ea;
+$color: #19EEFE;
 $blue:    #007bff !default; // #17D4FE
 $indigo:  #6610f2 !default;
 $purple:  #6f42c1 !default;
-$pink:    #e83e8c !default;
+$pink:    #F556FB !default;
 $red:     #dc3545 !default;
 $orange:  #fd7e14 !default;
-$yellow:  #ffc107 !default;
-$green:   #28a745 !default;
+$yellow:  #FFFC3A !default;
+$green: #0b8526 !default;
 $teal:    #20c997 !default;
-$cyan:    #17a2b8 !default;
+$cyan:    #19EEFE !default; //17a2b8
 
 @import '~bootstrap/scss/bootstrap';
 @import "~bootstrap/scss/functions";

@@ -1,3 +1,61 @@
+@import "../../variables";
+
 .WarningLights {
-  height: 15vh;
+  height: 30vh;
+
+  .row {
+    height: 15vh;
+  }
+
+  .icon {
+    display: block;
+    height: 45px;
+    width: 45px;
+    margin: 2.5vh 20px;
+    opacity: 0.15;
+
+    &.active {
+      opacity: 1;
+    }
+
+    &.icon--left-turn {
+      background: $green;
+      mask: url('../../icons/left-arrow-back.svg') center no-repeat;
+    }
+
+    &.icon--right-turn {
+      background: $green;
+      mask: url('../../icons/right-arrow-next.svg') center no-repeat;
+    }
+
+    &.icon--high-beam {
+      background: $blue;
+      mask: url('../../icons/high-beam.svg') center no-repeat;
+    }
+
+    &.icon--low-beam {
+      background: $yellow;
+      mask: url('../../icons/low-beam.svg') center no-repeat;
+    }
+
+    &.icon--oil-pressure {
+      background: $purple;
+      mask: url('../../icons/oil.svg') center no-repeat;
+    }
+
+    &.icon--battery {
+      background: $purple;
+      mask: url('../../icons/battery.svg') center no-repeat;
+    }
+
+    &.icon--lights {
+      background: $yellow;
+      mask: url('../../icons/parking-lights.svg') center no-repeat;
+    }
+
+    &.icon--parking {
+      background: $red;
+      mask: url('../../icons/brake-system-warning.svg') center no-repeat;
+    }
+  }
 }

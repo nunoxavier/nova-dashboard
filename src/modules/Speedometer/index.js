@@ -13,7 +13,7 @@ function Speedometer() {
     };
 
     const isKMS = true;
-    let amount = 100.8;
+    let amount = 69.0;
     let bits = intoBits(amount);
 
     let numbers = [];
@@ -26,7 +26,7 @@ function Speedometer() {
     }
 
     return (
-        <div className="Speedometer">
+        <div className="Speedometer mt-4">
             <div className="counter">
                 {numbers}
             </div>
