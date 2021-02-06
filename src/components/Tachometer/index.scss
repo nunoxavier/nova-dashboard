@@ -29,29 +29,22 @@ $blocksContainerHeight: $blockHeight + ($blocksContainerVerticalPadding * 2) + (
 .times {
   text-align: right;
   color: $cyan;
-  font-family: 'arcade';
-  font-style: normal;
-  font-weight: normal;
-  font-size: 10px;
+  font-size: 12px;
 
   span {
-    font-size: 8px;
+    font-size: 10px;
   }
 }
 
 // Numbers container
 .numbers-container {
   color: $cyan;
-  margin-bottom: 5px;
 
   .number {
     display: inline-block;
     width: #{$blockGroupWidth};
     margin-right: $blockGroupRightMargin;
-    font-size: 20px;
-    font-family: 'arcade';
-    font-style: normal;
-    font-weight: normal;
+    font-size: 28px;
 
     &:last-child {
       margin: 0;
