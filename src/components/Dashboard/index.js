@@ -1,4 +1,5 @@
-import React from 'react';
+import React from "react";
+import socketIOClient from "socket.io-client";
 
 import WarningLights from '../WarningLights';
 import Speedometer from '../Speedometer';
@@ -10,7 +11,24 @@ import Clock from '../Clock';
 
 import './index.scss';
 
+const SOCKET_ENDPOINT = 'http://localhost:8080';
+
 class Dashboard extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {}
+    }
+
+    componentDidMount() {
+        var that = this;
+        this.socket = socketIOClient(SOCKET_ENDPOINT);
+        this.socket.on('data', function (data) {
+            console.log(data);
+            // that.setState({ rpm: data.rpm });
+        });
+        this.socket.emit('fetchData');
+    }
+
     render() {
         return (
             <div className="Dashboard container-fluid">
