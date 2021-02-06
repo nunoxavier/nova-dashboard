@@ -12,19 +12,19 @@ class Speedometer extends React.Component {
     }
 
     componentDidMount() {
-        this.timerID = setInterval(
+        this.speedometerID = setInterval(
             () => this.tick(),
-            1000
+            100
         );
     }
 
     componentWillUnmount() {
-        clearInterval(this.timerID);
+        clearInterval(this.speedometerID);
     }
 
     tick() {
         this.setState({
-            amount: this.state.amount + 1
+            amount: this.state.amount + 0.1
         });
     }
 
