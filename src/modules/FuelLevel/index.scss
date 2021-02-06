@@ -1,0 +1,20 @@
+@import "../../variables";
+
+.FuelLevel {
+  color: $cyan;
+  font-family: 'arcade';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+
+  .icon {
+    display: inline-block;
+    height: 25px;
+    width: 25px;
+
+    &.icon--fuel {
+      background: $cyan;
+      mask: url('../../icons/fuel.svg') center no-repeat;
+    }
+  }
+}
