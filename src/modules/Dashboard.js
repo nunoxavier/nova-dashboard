@@ -7,13 +7,9 @@ import FuelLevel from './FuelLevel';
 
 import './Dashboard.scss';
 
-function Dashboard({ count, handleIncrementClick, handleDecrementClick }) {
+function Dashboard() {
     return (
         <div className="Dashboard container-fluid">
-            <h1>Helloworld React & Redux! {count}</h1>
-            <button onClick={handleDecrementClick}>Decrement</button>
-            <button onClick={handleIncrementClick}>Increment</button>
-
             <WarningLights/>
             <div className="MiddleModule row justify-content-center">
                 <div className="col-4">
