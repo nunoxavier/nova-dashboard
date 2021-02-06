@@ -5,6 +5,8 @@ import './index.scss';
 class Tachometer extends React.Component {
     constructor(props) {
         super(props);
+        this.socket = props.socket;
+
         this.state = {
             totalRPM: 8, // make 8 a config
             maxRPM: 8 * 1000, // make 8 a config
@@ -15,26 +17,12 @@ class Tachometer extends React.Component {
     }
 
     componentDidMount() {
-        this.tachometerID = setInterval(
-            () => this.tick(),
-            100
-        );
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.tachometerID);
-    }
-
-    tick() {
-        if (this.state.rpm + 100 <= this.state.maxRPM) {
-            this.setState({
-                rpm: this.state.rpm + 100
+        let that = this;
+        this.socket.on('data', function (data) {
+            that.setState({
+                rpm: data.rpm
             });
-        } else {
-            this.setState({
-                rpm: 0
-            });
-        }
+        });
     }
 
     render() {

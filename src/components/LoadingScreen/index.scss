@@ -1,0 +1,32 @@
+@import "../../variables";
+
+.LoadingScreen {
+  color: $cyan;
+  font-family: 'arcade';
+  font-style: normal;
+  font-weight: normal;
+
+  display: block;
+  position: absolute;
+  background: black;
+  height: 100vh;
+  z-index: 9999;
+
+  .loadingContent {
+    height: 100vh;
+  }
+
+  .novaLogo {
+    background: $white;
+    -webkit-mask-size: 100%;
+    mask-size: 100%;
+    mask-repeat: no-repeat;
+
+    display: block;
+    //width: 100%;
+    height: 165px;
+
+    -webkit-mask-image: url('../../icons/nova_logo.svg');
+    mask-image: url('../../icons/nova_logo.svg');
+  }
+}

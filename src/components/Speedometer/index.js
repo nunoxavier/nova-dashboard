@@ -5,6 +5,8 @@ import './index.scss';
 class Speedometer extends React.Component {
     constructor(props) {
         super(props);
+        this.socket = props.socket;
+
         this.state = {
             isKMS: true,
             amount: 0.0
@@ -12,19 +14,11 @@ class Speedometer extends React.Component {
     }
 
     componentDidMount() {
-        this.speedometerID = setInterval(
-            () => this.tick(),
-            100
-        );
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.speedometerID);
-    }
-
-    tick() {
-        this.setState({
-            amount: this.state.amount + 0.1
+        let that = this;
+        this.socket.on('data', function (data) {
+            that.setState({
+                amount: data.speed
+            });
         });
     }
 

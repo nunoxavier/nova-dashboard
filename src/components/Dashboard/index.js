@@ -8,43 +8,51 @@ import Odometer from '../Odometer';
 import WaterTemperature from '../WaterTemperature';
 import FuelLevel from '../FuelLevel';
 import Clock from '../Clock';
+import LoadingScreen from '../LoadingScreen';
 
 import './index.scss';
 
-const SOCKET_ENDPOINT = 'http://localhost:8080';
+const socket = socketIOClient('http://localhost:8080');
 
 class Dashboard extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {}
+
+        this.state = {
+            showLoading: true
+        };
     }
 
     componentDidMount() {
-        var that = this;
-        this.socket = socketIOClient(SOCKET_ENDPOINT);
-        this.socket.on('data', function (data) {
-            console.log(data);
-            // that.setState({ rpm: data.rpm });
+        let that = this;
+        socket.on('data', function (data) {
+            setTimeout(function () {
+                that.setState({
+                    showLoading: false,
+                })
+            }, 1000);
         });
-        this.socket.emit('fetchData');
     }
 
     render() {
         return (
-            <div className="Dashboard container-fluid">
-                <WarningLights/>
-                <div className="MiddleModule row justify-content-center">
-                    <div className="col-4">
-                        <Odometer/>
-                        <WaterTemperature/>
-                        <FuelLevel/>
-                        <Clock/>
+            <div>
+                {this.state.showLoading ? <LoadingScreen /> : null}
+                <div className="Dashboard container-fluid">
+                    <WarningLights socket={socket}/>
+                    <div className="MiddleModule row justify-content-center">
+                        <div className="col-4">
+                            <Odometer socket={socket}/>
+                            <WaterTemperature socket={socket}/>
+                            <FuelLevel socket={socket}/>
+                            <Clock/>
+                        </div>
+                        <div className="col-8">
+                            <Speedometer socket={socket}/>
+                        </div>
                     </div>
-                    <div className="col-8">
-                        <Speedometer/>
-                    </div>
+                    <Tachometer socket={socket}/>
                 </div>
-                <Tachometer/>
             </div>
         )
     };

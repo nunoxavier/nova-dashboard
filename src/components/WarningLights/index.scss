@@ -7,6 +7,14 @@
     height: 15vh;
   }
 
+  .socketWarning {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: $red;
+    font-weight: bold;
+  }
+
   .icon {
     display: block;
     height: 45px;
@@ -26,6 +34,11 @@
     &.icon--right-turn {
       background: $green;
       mask: url('../../icons/right-arrow-next.svg') center no-repeat;
+    }
+
+    &.icon--hazard {
+      background: $red;
+      mask: url('../../icons/hazard.svg') center no-repeat;
     }
 
     &.icon--high-beam {

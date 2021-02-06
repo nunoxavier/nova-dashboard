@@ -5,21 +5,45 @@ import './index.scss';
 class WarningLights extends React.Component {
     constructor(props) {
         super(props);
+        this.socket = props.socket;
+
         this.state = {
-            leftTurn: false,
-            rightTurn: false,
-            lights: false,
-            highBeam: false,
-            lowBeam: false,
-            oilPressure: false,
-            battery: false,
-            parking: true
+            toggles: {
+                leftTurn: false,
+                rightTurn: false,
+                hazard: false,
+                lights: false,
+                highBeam: false,
+                lowBeam: false,
+                oilPressure: false,
+                battery: false,
+                parking: false
+            },
+            status: {
+                leftTurn: false,
+                rightTurn: false,
+            },
+            socketWarning: false,
         }
     }
 
     componentDidMount() {
-        this.warningLightsID = setInterval(
-            () => this.tick(),
+        let that = this;
+        this.socket.on('data', function (data) {
+            that.setState({
+                toggles: data.lights,
+                socketWarning: false,
+            });
+        });
+
+        this.socket.on('disconnect', () => {
+            that.setState({
+                socketWarning: true,
+            })
+        });
+
+        that.warningLightsID = setInterval(
+            () => that.tick(),
             500
         );
     }
@@ -28,27 +52,44 @@ class WarningLights extends React.Component {
         clearInterval(this.warningLightsID);
     }
 
+    // Note we should check if the state.toggle is on and only then enable / blink the light
     tick() {
-        this.setState({
-            leftTurn: !this.state.leftTurn,
-            rightTurn: !this.state.rightTurn,
-        });
+        let status = this.state.status;
+
+        if (this.state.toggles.hazard) {
+            status.leftTurn = status.rightTurn = !status.leftTurn;
+        } else {
+            if (this.state.toggles.leftTurn) {
+                status.leftTurn = !status.leftTurn;
+            } else {
+                status.leftTurn = false;
+            }
+            if (this.state.toggles.rightTurn) {
+                status.rightTurn = !status.rightTurn;
+            } else {
+                status.rightTurn = false;
+            }
+        }
+
+        this.setState(status);
     }
 
     render() {
         return (
             <div className="WarningLights">
+                {this.state.socketWarning ? <span className="socketWarning">Connection error!</span> : null}
                 <div className="row justify-content-center">
-                    <i className={"icon icon--oil-pressure " + (this.state.oilPressure ? 'active' : '')}/>
-                    <i className={"icon icon--battery " + (this.state.battery ? 'active' : '')}/>
-                    <i className={"icon icon--parking " + (this.state.parking ? 'active' : '')}/>
-                    <i className={"icon icon--lights " + (this.state.lights ? 'active' : '')}/>
-                    <i className={"icon icon--low-beam " + (this.state.lowBeam ? 'active' : '')}/>
+                    <i className={"icon icon--oil-pressure " + (this.state.toggles.oilPressure ? 'active' : '')}/>
+                    <i className={"icon icon--battery " + (this.state.toggles.battery ? 'active' : '')}/>
+                    <i className={"icon icon--parking " + (this.state.toggles.parking ? 'active' : '')}/>
+                    <i className={"icon icon--hazard " + (this.state.toggles.hazard ? 'active' : '')}/>
+                    <i className={"icon icon--lights " + (this.state.toggles.lights ? 'active' : '')}/>
+                    <i className={"icon icon--low-beam " + (this.state.toggles.lowBeam ? 'active' : '')}/>
                 </div>
                 <div className="row justify-content-center">
-                    <i className={"icon icon--left-turn " + (this.state.leftTurn ? 'active' : '')}/>
-                    <i className={"icon icon--high-beam " + (this.state.highBeam ? 'active' : '')}/>
-                    <i className={"icon icon--right-turn " + (this.state.rightTurn ? 'active' : '')}/>
+                    <i className={"icon icon--left-turn " + (this.state.status.leftTurn ? 'active' : '')}/>
+                    <i className={"icon icon--high-beam " + (this.state.toggles.highBeam ? 'active' : '')}/>
+                    <i className={"icon icon--right-turn " + (this.state.status.rightTurn ? 'active' : '')}/>
                 </div>
             </div>
         );
