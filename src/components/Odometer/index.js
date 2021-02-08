@@ -25,9 +25,11 @@ class Odometer extends React.Component {
 
     render() {
         return (
-            <div className="Odometer mb-3">
-                total: {this.state.total}<br />
-                trip: {this.state.trip}
+            <div className="Odometer row mb-3">
+                <div className="col-2">Total</div>
+                <div className="col-10">{this.state.total}</div>
+                <div className="col-2">Trip</div>
+                <div className="col-10">{this.state.trip}</div>
             </div>
         );
     }

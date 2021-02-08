@@ -41,11 +41,11 @@ class Dashboard extends React.Component {
                 <div className="Dashboard container-fluid">
                     <WarningLights socket={socket}/>
                     <div className="MiddleModule row justify-content-center">
-                        <div className="col-4">
+                        <div className="col-4" style={{marginTop: "-72px"}}>
+                            <Clock/>
                             <Odometer socket={socket}/>
                             <WaterTemperature socket={socket}/>
                             <FuelLevel socket={socket}/>
-                            <Clock/>
                         </div>
                         <div className="col-8">
                             <Speedometer socket={socket}/>

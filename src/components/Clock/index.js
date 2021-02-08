@@ -29,8 +29,13 @@ class Clock extends React.Component {
 
     render() {
         return (
-            <div className="Clock mb-3">
-                {this.state.date.toLocaleTimeString('pt-PT')} {this.state.date.toLocaleDateString('pt-PT')}
+            <div className="Clock row">
+                <div className="col">
+                    {this.state.date.toLocaleDateString('pt-PT')}
+                </div>
+                <div className="col">
+                    {this.state.date.toLocaleTimeString('pt-PT')}
+                </div>
             </div>
         );
     }

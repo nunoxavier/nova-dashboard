@@ -15,26 +15,63 @@ class WaterTemperature extends React.Component {
     componentDidMount() {
         let that = this;
         this.socket.on('data', function (data) {
-            that.setState({
-                waterTemperature: data.waterTemperature
-            });
+            if (data.waterTemperature !== that.state.waterTemperature) {
+                that.setState({
+                    waterTemperature: data.waterTemperature
+                });
+            }
         });
     }
 
     render() {
+        const LEVELS = [
+            {
+                from: 0,
+                class: 'low'
+            },
+            {
+                from: 60,
+                class: 'normal'
+            },
+            {
+                from: 95,
+                class: 'high'
+            },
+            {
+                from: 105,
+                class: 'very-high'
+            },
+        ];
 
-        let progress = this.state.waterTemperature;
-        if (progress > 100) {
-            progress = 100;
+        // min: 0 | max: 120
+        let temperature = this.state.waterTemperature;
+        let level;
+        let totalSteps = 21;
+        let steps = [];
+        for (let i = 0; i < totalSteps; i++) {
+            steps.push(<div />);
         }
 
+        LEVELS.forEach((item, i) => {
+            if (item.from <= temperature) {
+                level = item.class;
+            }
+        });
+
         return (
-            <div className="WaterTemperature mb-3">
-                <span className="float-right">{this.state.waterTemperature}ºC</span>
-                <i className="icon icon--water-temperature"/> / Water temp
-                <div className="progress">
-                    <div className="progress-bar bg-info" role="progressbar" style={{width: progress + "%"}}/>
+            <div className="WaterTemperature mb-3 row no-gutters">
+                <div className={"col-10 gauge gauge--" + level}>
+                    <div className="label">
+                        <i className="icon icon--water-temperature align-text-bottom"/> Water temp ºC
+                    </div>
+                    <div className="bar-container">
+                        <div className="bar" style={{width: ((100 / 120) * temperature) + '%'}} />
+                    </div>
+                    <div className="steps">
+                        {steps}
+                    </div>
                 </div>
+                <div className="col-2 amount">{temperature}</div>
             </div>
         );
     }

@@ -15,20 +15,55 @@ class FuelLevel extends React.Component {
     componentDidMount() {
         let that = this;
         this.socket.on('data', function (data) {
-            that.setState({
-                fuelLevel: data.fuelLevel
-            });
+            if (data.fuelLevel !== that.state.fuelLevel) {
+                that.setState({
+                    fuelLevel: data.fuelLevel
+                });
+            }
         });
     }
 
     render() {
+        const LEVELS = [
+            {
+                from: 0,
+                class: 'low'
+            },
+            {
+                from: 25,
+                class: 'normal'
+            },
+        ];
+
+        // min: 0 | max: 100
+        let fuelLevel = this.state.fuelLevel;
+        let level;
+        let totalSteps = 16;
+        let steps = [];
+        for (let i = 0; i < totalSteps; i++) {
+            steps.push(<div />);
+        }
+
+        LEVELS.forEach((item, i) => {
+            if (item.from <= fuelLevel) {
+                level = item.class;
+            }
+        });
+
         return (
-            <div className="FuelLevel">
-                <span className="float-right">{this.state.fuelLevel}%</span>
-                <i className="icon icon--fuel"/> / Fuel
-                <div className="progress">
-                    <div className="progress-bar bg-info" role="progressbar" style={{width: this.state.fuelLevel + "%"}}/>
+            <div className="FuelLevel row no-gutters">
+                <div className={"col-10 gauge gauge--" + level}>
+                    <div className="label">
+                        <i className="icon icon--fuel align-text-bottom"/> Fuel level %
+                    </div>
+                    <div className="bar-container">
+                        <div className="bar" style={{width: fuelLevel + '%'}} />
+                    </div>
+                    <div className="steps">
+                        {steps}
+                    </div>
                 </div>
+                <div className="col-2 amount">{fuelLevel}</div>
             </div>
         );
     }

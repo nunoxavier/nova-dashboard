@@ -1,17 +1,129 @@
 @import "../../variables";
 
+$low: $cyan;
+$normal: $green;
+$high: $orange;
+$veryHigh: $red;
+
+$amountWidth: 45;
+$gaugeWidth: 197;
+
+$totalSteps: 21;
+$stepMargin: 3.1;
+$stepSideMargin: 5;
+$stepTotalMargin: ($totalSteps * ($stepMargin * 2)) + ($stepSideMargin * 2) - ($stepMargin * 2);
+$stepWidthMajor: (($gaugeWidth - $stepTotalMargin) / $totalSteps);
+$stepWidth: (($gaugeWidth - $stepTotalMargin) / $totalSteps);
+
 .WaterTemperature {
-  color: $cyan;
-  font-size: 10px;
+  padding-top: 20px;
 
-  .icon {
+  .amount {
     display: inline-block;
-    height: 25px;
-    width: 25px;
+    height: 44px;
+    line-height: 52px;
+    padding-left: 3px;
+    color: $green;
+  }
 
-    &.icon--water-temperature {
-      background: $cyan;
-      mask: url('../../icons/engine-coolant.svg') center no-repeat;
+  .gauge {
+    width: #{$gaugeWidth}px;
+    position: relative;
+    display: inline-block;
+
+    .label {
+      position: absolute;
+      top: -14px;
+      left: 10px;
+      background: black;
+      padding: 0 5px;
+      color: $cyan;
+
+      .icon {
+        display: inline-block;
+        height: 20px;
+        width: 20px;
+
+        &.icon--water-temperature {
+          background: $cyan;
+          mask: url('../../icons/engine-coolant.svg') center no-repeat;
+        }
+      }
+    }
+
+    .bar-container {
+      display: block;
+      width: 100%;
+      height: 44px;
+      padding: 10px 5px 5px;
+      border: 2px solid $green;
+      border-radius: 2px;
+
+      .bar {
+        display: block;
+        height: 25px;
+        transition: width .3s ease;
+      }
+    }
+
+    .steps {
+      height: 15px;
+      width: 100%;
+      padding: 0 #{$stepSideMargin}px;
+
+      div {
+        display: inline-block;
+        width: #{$stepWidth}px;
+        margin: 0 #{$stepMargin}px;
+        height: 10px;
+        vertical-align: top;
+
+        &:nth-child(n+0):nth-child(-n+16) {
+          background-color: $green;
+        }
+        &:nth-child(n+17) {
+          background-color: $red;
+        }
+
+        &:first-child {
+          margin-left: 0;
+        }
+        &:last-child {
+          margin-right: 0;
+        }
+
+        &:first-child,
+        &:nth-child(6),
+        &:nth-child(11),
+        &:nth-child(16),
+        &:nth-child(21) {
+          height: 15px;
+        }
+      }
+    }
+
+    &.gauge--low {
+      .bar-container .bar {
+        background: $low;
+      }
+    }
+
+    &.gauge--normal {
+      .bar-container .bar {
+        background: $normal;
+      }
+    }
+
+    &.gauge--high {
+      .bar-container .bar {
+        background: $high;
+      }
+    }
+
+    &.gauge--very-high {
+      .bar-container .bar {
+        background: $veryHigh;
+      }
     }
   }
 }

@@ -20,7 +20,7 @@ const io = socketIo(server, {
 });
 
 // Actual app
-const UPDATE_INTERVAL = 1000; // should be ~50-100
+const UPDATE_INTERVAL = 80; // should be ~50-100
 let state = {
     lights: {
         leftTurn: false,
@@ -43,6 +43,7 @@ let state = {
 };
 
 // Testing only
+let i = 0;
 setInterval(function () {
     if (state.rpm + 100 > 8000) {
         state.rpm = 0;
@@ -54,16 +55,16 @@ setInterval(function () {
     if (state.fuelLevel + 1 > 100) {
         state.fuelLevel = 0;
     }
-    if (state.waterTemperature + 1 > 120) {
+    if (state.waterTemperature + 5 > 120) {
         state.waterTemperature = 0;
     }
-    if (state.fuelLevel + 1 > 100) {
+    if (state.fuelLevel + 5 > 100) {
         state.fuelLevel = 0;
     }
     state.rpm += 100;
     state.speed += speed;
-    state.fuelLevel++;
-    state.waterTemperature++;
+    state.fuelLevel += 5;
+    state.waterTemperature += 5;
 
     // if (state.fuelLevel % 5 === 0) {
     //     state.lights.leftTurn = !state.lights.leftTurn;
@@ -71,12 +72,20 @@ setInterval(function () {
     // if (state.fuelLevel % 10 === 0) {
     //     state.lights.rightTurn = !state.lights.rightTurn;
     // }
-    if (state.fuelLevel % 5 === 0) {
-        state.lights.highBeam = !state.lights.highBeam;
-        state.lights.hazard = !state.lights.hazard;
+    if (i > 30) {
+        state.lights = {
+            hazard: true,
+            lights: true,
+            highBeam: true,
+            lowBeam: true,
+            oilPressure: true,
+            battery: true,
+            parking: true
+        };
     }
+    i++;
 
-}, 1000);
+}, 300);
 
 // Start socket server
 let timer;
