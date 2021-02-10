@@ -91,13 +91,6 @@ chromium-browser --kiosk --disable-overscroll-edge-effect --disable-sync --disab
 - Example only: To start chromium now: type  `startx -- -nocursor`
 - Example only: To quit chromium/x server - hit `Ctrl-Alt-Backspace`
 
-#### Auto Start Chromium
-
-1. Edit file `sudo nano /home/pi/.bash_profile`
-```
-node ~/
-[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && startx -- -nocursor
-```
 
 ### Forcing monitor resolutions
 
@@ -118,6 +111,7 @@ framebuffer_width-480
 - Run `sudo apt-get install git`
 - Run `git clone https://github.com/nunoxavier/nova-dashboard.git`
 - Run `cd nova-dashboard`
+- Run `cp init.sh /etc/init.d/init-server.sh && chmod +x /etc/init.d/init-server.sh` to make start up directly into browser
 - Run `yarn install --production=true`
 
 
