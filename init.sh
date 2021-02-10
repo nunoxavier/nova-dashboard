@@ -1,6 +1,6 @@
 #!/bin/bash
 
-node ~/nova-dashboard/server.js &
+node ./server.js &
 echo "Waiting for server"
 while ! nc -z localhost 8080; do
   sleep 0.1
