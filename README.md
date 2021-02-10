@@ -1,70 +1,129 @@
-# Getting Started with Create React App
+# NOVA Dashboard
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Commands:
 
-## Available Scripts
+- `yarn start` - start development server in [http://localhost:3000](http://localhost:3000)
+- `yarn build` - Builds the app for production to the `build` folder for the best performance.
 
-In the project directory, you can run:
 
-### `yarn start`
+# Setup NOVA Dashboard on Raspberry PI 3
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Parts List
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- Raspberry Pi 3
+- Heatsinks - (keep that CPU cooler)
+- Screen - todo: defined which screen
+- DC-DC converter (12v input to 5v usb) - Power Pi in the car
+- [Powerblock for safe power on and power off](http://powerblock.petrockblock.com/)
 
-### `yarn test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Pi setup
 
-### `yarn build`
+### Get the OS image installed
+1. Download [RASPBERRY PI OS LITE](https://www.raspberrypi.org/downloads/) onto micro SD card.
+2. Put SD card in Raspberry Pi, connect HDMI and keyboard
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Initial Configuration
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Boot Rasperry PI and login with `user: pi` and `password: raspberry`
+- Run `sudo iwlist wlan0 scan` to find wireless networks
+- Run `sudo nano /etc/wpa_supplicant/wpa_supplicant.conf` and add at the bottom of the file the following:
+  ```
+  country=PT
+  network={
+    ssid="HOMELAN2"
+    psk="qwerty123456"
+  }
+  ```
+- Save and reboot `sudo reboot`
+- Run `ifconfig wlan0` and should see it connected to the wireless network
+- Run `sudo raspi-config`
+- Go to **Interface Options** -> Enable SSH
+- Go to **System Options** -> **Hostname** -> Write `novadash`
+- Save and reboot
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### We're now able to connect through SSH  
 
-### `yarn eject`
+- On main computer run `ssh pi@IP` and `password: raspberry`
+- Run `sudo raspi-config`
+- Go to **System Options** -> **Boot / Auto Login** -> **Console Autologin**
+- Go to **System Options** -> **Network at Boot** -> **NO**
+- Save and reboot
+- Update everything `sudo apt-get -y update && sudo apt-get -y upgrade ; sudo apt-get autoremove` - this will take a while
+- Reboot `sudo reboot`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Setup Video driver
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### This will setup the video driver along with chromium browser
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- Run `sudo apt-get install libgl1-mesa-dri`
+- Run `sudo raspi-config`
+- Go to **Advanced Options** -> **A7: GL Driver** -> **GL (Fake KMS)**
+- Reboot `sudo reboot`
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+#### Chromium and x11 setup
 
-## Learn More
+The bare minimum we need are X server and window manager. Let’s install just that:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Run `sudo apt-get install --no-install-recommends xserver-xorg x11-xserver-utils xinit openbox`
+- Run `sudo apt-get install --no-install-recommends chromium-browser`
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### Configure xserver / Chromium
 
-### Code Splitting
+openbox is now installed; let's make it so our window's manager starts up chromium (auto start stuff comes later)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Edit file `sudo nano /etc/xdg/openbox/autostart`
+```
+# Disable any form of screen saver / screen blanking / power management
+xset s off
+xset s noblank
+xset -dpms
 
-### Analyzing the Bundle Size
+# Allow quitting the X server with CTRL-ATL-Backspace
+setxkbmap -option terminate:ctrl_alt_bksp
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+# Start Chromium in kiosk mode
+sed -i 's/"exited_cleanly":false/"exited_cleanly":true/' ~/.config/chromium/'Local State'
+sed -i 's/"exited_cleanly":false/"exited_cleanly":true/; s/"exit_type":"[^"]\+"/"exit_type":"Normal"/' ~/.config/chromium/Default/Preferences
+chromium-browser --kiosk --disable-overscroll-edge-effect --disable-sync --disable-suggestions-ui --disable-signin-promo  --mmal-frame-copy --mmal-frame-buffers=4 --ignore-gpu-blacklist --enable-native-gpu-memory-buffers --start-maximized --disable-infobars 'http://localhost:8080'
+```
 
-### Making a Progressive Web App
+- Example only: To start chromium now: type  `startx -- -nocursor`
+- Example only: To quit chromium/x server - hit `Ctrl-Alt-Backspace`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+#### Auto Start Chromium
 
-### Advanced Configuration
+1. Edit file `sudo nano /home/pi/.bash_profile`
+```
+node ~/
+[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && startx -- -nocursor
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Forcing monitor resolutions
 
-### Deployment
+1. Run `sudo nano /boot/config.txt` -> find, uncomment and set:
+```
+framebuffer_width=800
+framebuffer_width-480
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Install NodeJS
 
-### `yarn build` fails to minify
+- Run `curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -`
+- Run `sudo apt-get install -y nodejs`
+- Run `sudo npm install --global yarn`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Setup project
+
+- Run `sudo apt-get install git`
+- Run `git clone https://github.com/nunoxavier/nova-dashboard.git`
+- Run `cd nova-dashboard`
+- Run `yarn install --production=true`
+
+
+## MAKE A BACKUP
+
+Now that we have installed most of the required OS stuff....LET'S MAKE A BACKUP!
+
+* [https://www.raspberrypi.org/magpi/back-up-raspberry-pi/](https://www.raspberrypi.org/magpi/back-up-raspberry-pi/)
+* From your mac: `sudo dd bs=4m if=/dev/rdisk2 of=someCoolBackupName.img`
