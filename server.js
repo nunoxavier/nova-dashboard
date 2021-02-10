@@ -97,7 +97,7 @@ io.on('connection', function (socket) {
 
     //send data to client
     timer = setInterval(function () {
-        console.log("EMIT", state);
+        // console.log("EMIT", state);
         socket.emit('data', state);
     }, UPDATE_INTERVAL);
 

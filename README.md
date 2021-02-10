@@ -95,7 +95,7 @@ chromium-browser --kiosk --disable-overscroll-edge-effect --disable-sync --disab
 
 1. Edit file `sudo nano /home/pi/.bash_profile`
 ```
-bash ~/nova-dashboard/init.sh
+cd ~/nova-dashboard && bash init.sh
 ```
 
 ### Forcing monitor resolutions
