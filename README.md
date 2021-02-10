@@ -126,4 +126,4 @@ framebuffer_width-480
 Now that we have installed most of the required OS stuff....LET'S MAKE A BACKUP!
 
 * [https://www.raspberrypi.org/magpi/back-up-raspberry-pi/](https://www.raspberrypi.org/magpi/back-up-raspberry-pi/)
-* From your mac: `sudo dd bs=4m if=/dev/rdisk2 of=someCoolBackupName.img`
+* From your mac: `sudo dd bs=4m if=/dev/rdisk2s1 of=NovaDashboard_vX.img`
