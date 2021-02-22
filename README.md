@@ -26,23 +26,14 @@
 ### Initial Configuration
 
 - Boot Rasperry PI and login with `user: pi` and `password: raspberry`
-- Run `sudo iwlist wlan0 scan` to find wireless networks
-- Run `sudo nano /etc/wpa_supplicant/wpa_supplicant.conf` and add at the bottom of the file the following:
-  ```
-  country=PT
-  network={
-    ssid="HOMELAN2"
-    psk="qwerty123456"
-  }
-  ```
-- Save and reboot `sudo reboot`
-- Run `ifconfig wlan0` and should see it connected to the wireless network
 - Run `sudo raspi-config`
+- Go to **Localisation Options** -> **WLAN Country** -> Select PT Portugal
+- Go to **System Options** -> **Wireless LAN** -> SSID: `HOMELAN2` PASSWORD: `qwerty123456`
 - Go to **Interface Options** -> Enable SSH
 - Go to **System Options** -> **Hostname** -> Write `novadash`
-- Save and reboot
+- Finish / Save and reboot `sudo reboot`
 
-### We're now able to connect through SSH  
+### We're now able to connect through SSH (`ifconfig wlan0`)
 
 - On main computer run `ssh pi@IP` and `password: raspberry`
 - Run `sudo raspi-config`
@@ -119,11 +110,3 @@ framebuffer_width-480
 - Run `cd nova-dashboard`
 - Run `chmod +x init.sh`
 - Run `yarn install --production=true`
-
-
-## MAKE A BACKUP
-
-Now that we have installed most of the required OS stuff....LET'S MAKE A BACKUP!
-
-* [https://www.raspberrypi.org/magpi/back-up-raspberry-pi/](https://www.raspberrypi.org/magpi/back-up-raspberry-pi/)
-* From your mac: `sudo dd bs=4m if=/dev/rdisk2s1 of=NovaDashboard_vX.img`
