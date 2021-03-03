@@ -49,7 +49,7 @@ class WaterTemperature extends React.Component {
         let totalSteps = 21;
         let steps = [];
         for (let i = 0; i < totalSteps; i++) {
-            steps.push(<div />);
+            steps.push(<div key={i} />);
         }
 
         LEVELS.forEach((item, i) => {
@@ -67,7 +67,7 @@ class WaterTemperature extends React.Component {
                     <div className="bar-container">
                         <div className="bar" style={{width: ((100 / 120) * temperature) + '%'}} />
                     </div>
-                    <div className="steps">
+                    <div className="steps d-flex justify-content-between">
                         {steps}
                     </div>
                 </div>

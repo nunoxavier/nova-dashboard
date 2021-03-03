@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const http = require("http");
 const socketIo = require("socket.io");
+const { networkInterfaces } = require('os');
 
 const app = express();
 
@@ -18,6 +19,22 @@ const io = socketIo(server, {
         origin: '*',
     }
 });
+
+// Development info
+const nets = networkInterfaces();
+const ipAddresses = Object.create(null); // Or just '{}', an empty object
+
+for (const name of Object.keys(nets)) {
+    for (const net of nets[name]) {
+        // Skip over non-IPv4 and internal (i.e. 127.0.0.1) addresses
+        if (net.family === 'IPv4') {
+            if (!ipAddresses[name]) {
+                ipAddresses[name] = [];
+            }
+            ipAddresses[name].push(net.address);
+        }
+    }
+}
 
 // Actual app
 const UPDATE_INTERVAL = 80; // should be ~50-100
@@ -40,15 +57,19 @@ let state = {
     waterTemperature: 0, // ºC
     fuelLevel: 0, // %
     oilTemperature: 0, // ºC
+    development: {
+        ips: ipAddresses,
+    }
 };
 
 // Testing only
-let i = 0;
+let i = 0,
+    toggle = false;
 setInterval(function () {
     if (state.rpm + 100 > 8000) {
         state.rpm = 0;
     }
-    let speed = Number(((Math.random() * 10) + Math.random()).toFixed(1));
+    let speed = Number(((Math.random() * 10) + Math.random()).toFixed(0));
     if (state.speed + speed > 200) {
         state.speed = 0;
     }
@@ -72,15 +93,16 @@ setInterval(function () {
     // if (state.fuelLevel % 10 === 0) {
     //     state.lights.rightTurn = !state.lights.rightTurn;
     // }
-    if (i > 30) {
+    if (i % 15 === 0) {
+        toggle = !toggle;
         state.lights = {
-            hazard: true,
-            lights: true,
-            highBeam: true,
-            lowBeam: true,
-            oilPressure: true,
-            battery: true,
-            parking: true
+            hazard: toggle,
+            lights: toggle,
+            highBeam: toggle,
+            lowBeam: toggle,
+            oilPressure: toggle,
+            battery: toggle,
+            parking: toggle
         };
     }
     i++;

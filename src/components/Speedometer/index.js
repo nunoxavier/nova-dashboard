@@ -25,19 +25,18 @@ class Speedometer extends React.Component {
     render() {
 
         const intoBits = (number) => {
-            let bits = number.toFixed(1).split('');
+            let bits = number.toFixed(0).split('');
             let total = bits.length;
-            for (let i = 0; i < 5 - total; i++) {
+            for (let i = 0; i < 3 - total; i++) {
                 bits.unshift(null);
             }
-            bits.splice(-2, 1);
             return bits;
         };
 
         let bits = intoBits(this.state.amount);
 
         let numbers = [];
-        for (let i = 0; i <= 3; i++) {
+        for (let i = 0; i <= 2; i++) {
             let classes = ['number'];
             if (bits[i] !== null) {
                 classes.push('number--' + bits[i]);

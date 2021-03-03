@@ -9,11 +9,9 @@ $amountWidth: 45;
 $gaugeWidth: 197;
 
 $totalSteps: 21;
-$stepMargin: 3.1;
-$stepSideMargin: 5;
-$stepTotalMargin: ($totalSteps * ($stepMargin * 2)) + ($stepSideMargin * 2) - ($stepMargin * 2);
-$stepWidthMajor: (($gaugeWidth - $stepTotalMargin) / $totalSteps);
-$stepWidth: (($gaugeWidth - $stepTotalMargin) / $totalSteps);
+$stepMargin: 4;
+$stepSideMargin: 7;
+$stepWidth: 3;
 
 .WaterTemperature {
   padding-top: 20px;
@@ -74,7 +72,6 @@ $stepWidth: (($gaugeWidth - $stepTotalMargin) / $totalSteps);
       div {
         display: inline-block;
         width: #{$stepWidth}px;
-        margin: 0 #{$stepMargin}px;
         height: 10px;
         vertical-align: top;
 
@@ -83,13 +80,6 @@ $stepWidth: (($gaugeWidth - $stepTotalMargin) / $totalSteps);
         }
         &:nth-child(n+17) {
           background-color: $red;
-        }
-
-        &:first-child {
-          margin-left: 0;
-        }
-        &:last-child {
-          margin-right: 0;
         }
 
         &:first-child,

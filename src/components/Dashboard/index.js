@@ -1,6 +1,7 @@
 import React from "react";
 import socketIOClient from "socket.io-client";
 
+import Development from '../Development';
 import WarningLights from '../WarningLights';
 import Speedometer from '../Speedometer';
 import Tachometer from '../Tachometer';
@@ -38,6 +39,7 @@ class Dashboard extends React.Component {
         return (
             <div>
                 {this.state.showLoading ? <LoadingScreen /> : null}
+                <Development socket={socket}/>
                 <div className="Dashboard container-fluid">
                     <WarningLights socket={socket}/>
                     <div className="MiddleModule row justify-content-center">

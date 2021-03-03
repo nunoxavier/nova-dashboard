@@ -7,14 +7,6 @@
     height: 15vh;
   }
 
-  .socketWarning {
-    position: absolute;
-    top: 0;
-    left: 0;
-    color: $red;
-    font-weight: bold;
-  }
-
   .icon {
     display: block;
     height: 45px;
@@ -27,12 +19,12 @@
     }
 
     &.icon--left-turn {
-      background: $green;
+      background: $green-light;
       mask: url('../../icons/left-arrow-back.svg') center no-repeat;
     }
 
     &.icon--right-turn {
-      background: $green;
+      background: $green-light;
       mask: url('../../icons/right-arrow-next.svg') center no-repeat;
     }
 
@@ -47,7 +39,7 @@
     }
 
     &.icon--low-beam {
-      background: $yellow;
+      background: $orange;
       mask: url('../../icons/low-beam.svg') center no-repeat;
     }
 
@@ -62,7 +54,7 @@
     }
 
     &.icon--lights {
-      background: $yellow;
+      background: $orange;
       mask: url('../../icons/parking-lights.svg') center no-repeat;
     }
 

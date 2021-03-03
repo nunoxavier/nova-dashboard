@@ -9,9 +9,7 @@ $gaugeWidth: 197;
 $totalSteps: 16;
 $stepMargin: 4.6;
 $stepSideMargin: 7;
-$stepTotalMargin: ($totalSteps * ($stepMargin * 2)) + ($stepSideMargin * 2) - ($stepMargin * 2);
-$stepWidthMajor: (($gaugeWidth - $stepTotalMargin) / $totalSteps);
-$stepWidth: (($gaugeWidth - $stepTotalMargin) / $totalSteps);
+$stepWidth: 3;
 
 .FuelLevel {
   padding-top: 20px;
@@ -72,7 +70,6 @@ $stepWidth: (($gaugeWidth - $stepTotalMargin) / $totalSteps);
       div {
         display: inline-block;
         width: #{$stepWidth}px;
-        margin: 0 #{$stepMargin}px;
         height: 10px;
         vertical-align: top;
 
@@ -81,13 +78,6 @@ $stepWidth: (($gaugeWidth - $stepTotalMargin) / $totalSteps);
         }
         &:nth-child(n+5) {
           background-color: $green;
-        }
-
-        &:first-child {
-          margin-left: 0;
-        }
-        &:last-child {
-          margin-right: 0;
         }
 
         &:first-child,

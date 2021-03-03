@@ -41,7 +41,7 @@ class FuelLevel extends React.Component {
         let totalSteps = 16;
         let steps = [];
         for (let i = 0; i < totalSteps; i++) {
-            steps.push(<div />);
+            steps.push(<div key={i} />);
         }
 
         LEVELS.forEach((item, i) => {
@@ -59,7 +59,7 @@ class FuelLevel extends React.Component {
                     <div className="bar-container">
                         <div className="bar" style={{width: fuelLevel + '%'}} />
                     </div>
-                    <div className="steps">
+                    <div className="steps d-flex justify-content-between">
                         {steps}
                     </div>
                 </div>

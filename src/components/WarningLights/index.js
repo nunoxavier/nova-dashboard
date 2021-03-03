@@ -22,8 +22,7 @@ class WarningLights extends React.Component {
             status: {
                 leftTurn: false,
                 rightTurn: false,
-            },
-            socketWarning: false,
+            }
         }
     }
 
@@ -32,14 +31,7 @@ class WarningLights extends React.Component {
         this.socket.on('data', function (data) {
             that.setState({
                 toggles: data.lights,
-                socketWarning: false,
             });
-        });
-
-        this.socket.on('disconnect', () => {
-            that.setState({
-                socketWarning: true,
-            })
         });
 
         that.warningLightsID = setInterval(
@@ -77,7 +69,6 @@ class WarningLights extends React.Component {
     render() {
         return (
             <div className="WarningLights">
-                {this.state.socketWarning ? <span className="socketWarning">Connection error!</span> : null}
                 <div className="row justify-content-center">
                     <i className={"icon icon--oil-pressure " + (this.state.toggles.oilPressure ? 'active' : '')}/>
                     <i className={"icon icon--battery " + (this.state.toggles.battery ? 'active' : '')}/>
